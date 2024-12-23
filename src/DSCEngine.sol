@@ -36,6 +36,8 @@ import {IERC20} from "lib/openzepplin-contracts/contracts/token/ERC20/IERC20.sol
 import {AggregatorV3Interface} from
     "lib/chainlink-brownie-contracts.git/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
+import {OracleLib} from "src/libraries/OracleLib.sol";
+
 contract DSCEngine is ReentrancyGuard {
     ///////////////////
     // Errors

@@ -12,7 +12,7 @@ contract DSCEngineTest is Test {
     DeployDSC deployer;
     DecentralizedStableCoin dsc;
     DSCEngine dsce;
-    HelperConfig config;
+    HelperConfig public helperConfig;
     address ethUsdPriceFeed;
     address weth;
 
@@ -21,9 +21,9 @@ contract DSCEngineTest is Test {
     uint256 public constant STARTING_ERC20_BALANCE = 10 ether;
 
     function setUp() public {
-        deployer = new DeployDSC();
-        (dsc, dsce, config) = deployer.run();
-        (ethUsdPriceFeed,, weth,,) = config.activeNetworkConfig();
+         deployer = new DeployDSC();
+        (dsc, dsce, helperConfig) = deployer.run();
+        (ethUsdPriceFeed,, weth,,) = helperConfig.activeNetworkConfig();
 
         ERC20Mock(weth).mint(USER, STARTING_ERC20_BALANCE);
     }
