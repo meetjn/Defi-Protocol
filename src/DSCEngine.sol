@@ -107,7 +107,7 @@ contract DSCEngine is ReentrancyGuard {
     ///////////////////
     constructor(address[] memory tokenAddresses, address[] memory priceFeedAddresses, address dscAddress) {
         if (tokenAddresses.length != priceFeedAddresses.length) {
-            revert DSCEngine__TokenAddressesAndPriceFeedAddressesAmountsDontMatch();
+            revert ();
         }
         // These feeds will be the USD pairs
         // For example ETH / USD or MKR / USD
@@ -368,14 +368,6 @@ contract DSCEngine is ReentrancyGuard {
         return _calculateHealthFactor(totalDscMinted, collateralValueInUsd);
     }
 
-    function getAccountInformation(address user)
-        external
-        view
-        returns (uint256 totalDscMinted, uint256 collateralValueInUsd)
-    {
-        return _getAccountInformation(user);
-    }
-
     function getUsdValue(
         address token,
         uint256 amount // in WEI
@@ -408,5 +400,9 @@ contract DSCEngine is ReentrancyGuard {
         // The returned value from Chainlink will be 2000 * 1e8
         // Most USD pairs have 8 decimals, so we will just pretend they all do
         return ((usdAmountInWei * PRECISION) / (uint256(price) * ADDITIONAL_FEED_PRECISION));
+    }
+
+    function getAccountInformation(address user) external view returns (uint256 totalDscMinted, uint256 collateralValueInUsd) {
+        (totalDscMinted, collateralValueInUsd) = _getAccountInformation(user);
     }
 }
